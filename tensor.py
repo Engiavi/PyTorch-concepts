@@ -44,3 +44,15 @@ print("using eye ->", torch.eye(5))
 
 # using full
 print("using full ->", torch.full((3, 3), 5))
+
+# Tensor Shapes
+a = torch.tensor([[1,2,3],[4,5,6]])
+# these likes methods are used to get the shape of the tensor and create tensor of same shape and provided methods like empty creates random values, zeros creates tensor of zeros, ones creates tensor of ones and rand creates random values between 0 and 1
+# 
+torch.empty_like(x)
+
+torch.zeros_like(x)
+
+torch.ones_like(x)
+
+torch.rand_like(x, dtype=torch.float32)
