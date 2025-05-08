@@ -61,3 +61,16 @@ dL_db = dloss_dy_pred * dy_pred_dz * dz_db
 
 print(f"Manual Gradient of loss w.r.t weight (dw): {dL_dw}")
 print(f"Manual Gradient of loss w.r.t bias (db): {dL_db}")
+
+# code for complex differentiation using autograd calculation
+
+x = torch.tensor(6.7)
+y = torch.tensor(0.0)
+w = torch.tensor(1.0, requires_grad=True)
+b = torch.tensor(0.0, requires_grad=True)
+z = w*x + b
+y_pred = torch.sigmoid(z)
+loss = binary_cross_entropy_loss(y_pred, y)
+loss.backward()
+print(w.grad)
+print(b.grad)
