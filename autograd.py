@@ -59,8 +59,8 @@ dz_db = 1  # dz/db = 1 (bias contributes directly to z)
 dL_dw = dloss_dy_pred * dy_pred_dz * dz_dw
 dL_db = dloss_dy_pred * dy_pred_dz * dz_db
 
-print(f"Manual Gradient of loss w.r.t weight (dw): {dL_dw}")
-print(f"Manual Gradient of loss w.r.t bias (db): {dL_db}")
+# print(f"Manual Gradient of loss w.r.t weight (dw): {dL_dw}")
+# print(f"Manual Gradient of loss w.r.t bias (db): {dL_db}")
 
 # code for complex differentiation using autograd calculation
 
@@ -72,5 +72,21 @@ z = w*x + b
 y_pred = torch.sigmoid(z)
 loss = binary_cross_entropy_loss(y_pred, y)
 loss.backward()
-print(w.grad)
-print(b.grad)
+# print(w.grad)
+# print(b.grad)
+
+# if we are training a large neural network then we have to apply backward pass again and again, this will create a confusion and adds necessary values in gradinet(derivate) like at first it gives 4 then again run the backward pass it gives 8, so we have to clear the gradient before running the backward pass again
+# to clear the gradient we have to use zero_grad() function
+# w.grad.zero_()
+
+# there are few ways to do so. some are given below:-
+x.requires_grad_(False) # this will set the requires_grad to false, there will be no gradient calculation(tracking)
+x.detach() # this will return a new tensor that does not require gradient
+# Example:-
+x = torch.tensor(3.0, requires_grad=True)
+y = x.detach() # this will create a new tensor y that does not require gradient
+# print(y)
+
+with torch.no_grad(): # this will not track the gradient
+    y = x + 2 # this will create a new tensor y that does not require gradient
+    print(y) # this will not require gradient     
